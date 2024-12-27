@@ -80,7 +80,7 @@ if __name__ == "__main__":
         os.makedirs(Config.SESSIONS)
 
     PRO = Client(
-        "AFK-DL",
+        "bot",
         bot_token=Config.BOT_TOKEN,
         api_id=Config.API_ID,
         api_hash=Config.API_HASH,
