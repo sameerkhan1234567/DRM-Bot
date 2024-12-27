@@ -1,7 +1,7 @@
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# (c) AFK
+# (c) Client
 
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
@@ -15,12 +15,12 @@ import datetime
 from helpers.toolkit import Tools, Vidtools
 from main import Config, Msg, Store, LOGGER as LOGS
 from helpers.prog_bar import progress_for_pyrogram
-from pyrogram import Client as AFK
+from pyrogram import Client
 from pyrogram.types import Message
 
 
 class Upload_to_Tg:
-    def __init__(self, bot: AFK, m: Message, name: str, file_path, path, Thumb, show_msg: Message, caption: str) -> None:
+    def __init__(self, bot: ,Client m: Message, name: str, file_path, path, Thumb, show_msg: Message, caption: str) -> None:
         self.bot = bot
         self.m = m
         self.name = name
