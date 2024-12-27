@@ -1,4 +1,4 @@
-from pyrogram import filters, Client as ace
+from pyrogram import filters, Client
 from main import LOGGER as LOGS, prefixes
 from pyrogram.types import Message
 from main import Config
@@ -13,11 +13,8 @@ import requests
 import wget
 import img2pdf
 
-@ace.on_message(
-    (filters.chat(Config.GROUPS) | filters.chat(Config.AUTH_USERS)) &
-    filters.incoming & filters.command("ytc", prefixes=prefixes)
-)
-async def drm(bot: ace, m: Message):
+@bot.on_message(filters.command("ytc", prefixes=prefixes))
+async def drm(bot: Client, m: Message):
     path = f"{Config.DOWNLOAD_LOCATION}/{m.chat.id}"
     tPath = f"{Config.DOWNLOAD_LOCATION}/PHOTO/{m.chat.id}"
     os.makedirs(path, exist_ok=True)
