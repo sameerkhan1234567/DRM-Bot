@@ -1,4 +1,4 @@
-from pyrogram import filters, Client as AFK
+from pyrogram import filters, Client
 from main import LOGGER as LOGS, prefixes, Config, Msg
 from pyrogram.types import Message
 from handlers.tg import TgClient, TgHandler
@@ -10,21 +10,15 @@ from handlers.downloader import download_handler, get_link_atributes
 from handlers.uploader import Upload_to_Tg
 
 
-@AFK.on_message(
-    (filters.chat(Config.GROUPS) | filters.chat(Config.AUTH_USERS)) &
-    filters.incoming & filters.command("start", prefixes=prefixes)
-)
-async def start_msg(bot: AFK, m: Message):
+@bot.on_message(filters.command("start", prefixes=prefixes))
+async def start_msg(bot: Client, m: Message):
     await bot.send_message(
         chat_id=m.chat.id,
         text=Msg.START_MSG
     )
 
 
-@AFK.on_message(
-    (filters.chat(Config.GROUPS) | filters.chat(Config.AUTH_USERS)) &
-    filters.incoming & filters.command("restart", prefixes=prefixes)
-)
+@bot.on_message(filters.command("restart", prefixes=prefixes))
 async def restart_handler(_, m):
     shutil.rmtree(Config.DOWNLOAD_LOCATION)
     await m.reply_text(Msg.RESTART_MSG, True)
@@ -33,11 +27,8 @@ async def restart_handler(_, m):
 error_list = []
 
 
-@AFK.on_message(
-    (filters.chat(Config.GROUPS) | filters.chat(Config.AUTH_USERS)) &
-    filters.incoming & filters.command("pro", prefixes=prefixes)
-)
-async def Pro(bot: AFK, m: Message):
+@bot.on_message(filters.command("pro", prefixes=prefixes))
+async def Pro(bot: Client, m: Message):
     sPath = f"{Config.DOWNLOAD_LOCATION}/{m.chat.id}"
     tPath =  f"{Config.DOWNLOAD_LOCATION}/FILE/{m.chat.id}"#f"{Config.DOWNLOAD_LOCATION}/FILE/{m.chat.id}"
     os.makedirs(sPath, exist_ok=True)
