@@ -125,7 +125,7 @@ class TgHandler:
 
 
 class TgClient(TgHandler):
-    async def Ask_user(self):
+    async def user(self):
         userr = TgClient.user_(self)
         msg1 = await self.bot.send_message(
             self.m.chat.id,
