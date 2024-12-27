@@ -1,5 +1,5 @@
 import os
-from pyrogram import Client as AFK, idle
+from pyrogram import Client
 from pyrogram.enums import ChatMemberStatus, ChatMembersFilter
 from pyrogram import enums
 from pyrogram.types import ChatMember
@@ -7,44 +7,40 @@ import asyncio
 import logging
 import tgcrypto
 import logging
-from tglogging import TelegramLogHandler
+from logging.handlers import RotatingFileHandler
 
 # Config 
 class Config(object):
-    BOT_TOKEN = os.environ.get("BOT_TOKEN", "7004904928:AAHbSMCsku6d_qg0-22Ah0dv2CYzIF3Oe0E")
+    BOT_TOKEN = os.environ.get("BOT_TOKEN", "7535024319:AAFbk6M1WuFQMEhqGsE2B9mg7VzXutJ1UW8")
     API_ID = int(os.environ.get("API_ID",  "22100695"))
     API_HASH = os.environ.get("API_HASH", "0e8f93300ccbbcd56066e6d790b0d3b2")
     DOWNLOAD_LOCATION = "./DOWNLOADS"
     SESSIONS = "./SESSIONS"
+    
 
-    AUTH_USERS = os.environ.get('AUTH_USERS', '6488911325').split(',')
-    for i in range(len(AUTH_USERS)):
-        AUTH_USERS[i] = int(AUTH_USERS[i])
-
-    GROUPS = os.environ.get('GROUPS', '-1002075880942').split(',')
-    for i in range(len(GROUPS)):
-        GROUPS[i] = int(GROUPS[i])
-
-    LOG_CH = os.environ.get("LOG_CH", "-1002059340064")
-
-# TelegramLogHandler is a custom handler which is inherited from an existing handler. ie, StreamHandler.
 logging.basicConfig(
-    level=logging.INFO,
-    format="[%(asctime)s - %(levelname)s] - %(name)s - %(message)s",
-    datefmt='%d-%b-%y %H:%M:%S',
+
+    level=logging.ERROR,
+
+    format=
+
+    "%(asctime)s - %(levelname)s - %(message)s [%(filename)s:%(lineno)d]",
+
+    datefmt="%d-%b-%y %H:%M:%S",
+
     handlers=[
-        TelegramLogHandler(
-            token=Config.BOT_TOKEN, 
-            log_chat_id= Config.LOG_CH, 
-            update_interval=2, 
-            minimum_lines=1, 
-            pending_logs=200000),
-        logging.StreamHandler()
-    ]
+
+        RotatingFileHandler("logs.txt", maxBytes=50000000, backupCount=10),
+
+        logging.StreamHandler(),
+
+    ],
+
 )
 
-LOGGER = logging.getLogger(__name__)
-LOGGER.info("live log streaming to telegram.")
+logging.getLogger("pyrogram").setLevel(logging.WARNING)
+
+logging = logging.getLogger()
 
 
 # Store
@@ -93,13 +89,7 @@ if __name__ == "__main__":
         workdir= f"{Config.SESSIONS}/",
         workers= 2,
     )
-
-    chat_id = []
-    for i, j in zip(Config.GROUPS, Config.AUTH_USERS):
-        chat_id.append(i)
-        chat_id.append(j)
-    
-    
+  
     async def main():
         await PRO.start()
         # h = await PRO.get_chat_member(chat_id= int(-1002115046888), user_id=6695586027)
