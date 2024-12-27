@@ -1,18 +1,18 @@
 from main import LOGGER as LOGS, prefixes, Config, Msg
-from pyrogram import Client as AFK
+from pyrogram import Client
 from pyrogram.types import Message
 from handlers.html import parse_html
 import os
 
 
 class TgHandler:
-    def __init__(self, bot: AFK, m: Message, path: str) -> None:
+    def __init__(self, bot: Client, m: Message, path: str) -> None:
         self.bot = bot
         self.m = m
         self.path = path
 
     @staticmethod
-    async def error_message(bot: AFK, m: Message, error: str):
+    async def error_message(bot: Client, m: Message, error: str):
         LOGS.error(error)
         await bot.send_message(
             chat_id= Config.LOG_CH,
