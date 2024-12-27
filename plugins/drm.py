@@ -1,6 +1,6 @@
 from fileinput import filename
 from pyrogram import filters, Client
-from main import LOGGER, prefixes
+from main import LOGGER
 from pyrogram.types import Message
 from main import Config
 import os
